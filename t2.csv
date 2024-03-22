@@ -1,0 +1,265 @@
+"# An eccmmerce research company claims that 65% or more graduate students have bought merchandise online. A consumer group is suspicious of the claim and thinks that the proportion is lower than 65%.
+# a random sample o85 graduate students shows that only 22 students have even done so. Is there enough evidence to show that the true proportion is lower than 65%.
+# conduct the test at 5%  type I error and use the p-value and rejection region approaches.","import numpy as np
+from scipy import stats
+
+# Sample proportion
+p_hat = 22 / 85
+
+# Claimed proportion
+p_claimed = 0.65
+
+# Sample size
+n = 85
+
+# Calculate the test statistic (z-score)
+z = (p_hat - p_claimed) / np.sqrt((p_claimed * (1 - p_claimed)) / n)
+
+# Calculate the p-value
+p_value = stats.norm.cdf(z)
+
+# Significance level
+alpha = 0.05
+
+print(""Test statistic (z-score):"", z)
+print(""P-value:"", p_value)
+
+# Decision based on the p-value approach
+if p_value < alpha:
+    print(""Reject the null hypothesis. There is enough evidence to conclude that the true proportion is lower than 65%."")
+else:
+    print(""Fail to reject the null hypothesis. There is not enough evidence to conclude that the true proportion is lower than 65%."")
+
+# Decision based on the rejection region approach
+if z < stats.norm.ppf(alpha):
+    print(f'z= {z}  and  {stats.norm.ppf(alpha)} Reject the null hypothesis. There is enough evidence to conclude that the true proportion is lower than 65%.')
+else:
+    print(""Fail to reject the null hypothesis. There is not enough evidence to conclude that the true proportion is lower than 65%."")",
+"# A biologist is studying a particular species of flower known for its rare blooming cycle. she finds that there is a 10% chance of observing a bloom on any given day during the peak season.
+# What is the probability that she observes the first bloom on the fifth day?","from scipy.stats import nbinom
+
+# Probability of observing a bloom on any given day
+p_bloom = 0.1
+
+# Number of successes required (k)
+k_successes = 1  # We want the first bloom
+
+# Number of trials until the first success (bloom)
+n_trials_until_first_bloom = 5
+
+# Calculate the number of failures before the first success
+failures_before_first_bloom = n_trials_until_first_bloom - k_successes
+
+# Calculate the probability of observing the first bloom on the fifth day
+p_first_bloom_on_fifth_day = nbinom.pmf(failures_before_first_bloom, k_successes, p_bloom)
+
+print(""Probability of observing the first bloom on the fifth day:"", p_first_bloom_on_fifth_day)","from scipy.stats import geom
+p_geom = 0.1  #prob success
+k_geom = 5 #trials
+geometric_prob = geom.pmf(k_geom, p_geom)
+print(geometric_prob)"
+# an oil company conducts a geological study that indicates that an explanatory oil well should havea 20% chance of striking oil. what is the probability that the third strike comes on the seventh well drilled.,"from scipy.stats import nbinom
+
+# Probability of striking oil on each well
+p_success = 0.2
+
+# Number of successes required (k)
+k_successes = 3  # We want the third strike
+
+# Number of trials (wells drilled) until the third success
+n_trials_until_3rd_strike = 7
+
+# Calculate the number of failures before the third success
+failures_before_3rd_strike = n_trials_until_3rd_strike - k_successes
+
+# Calculate the probability of the third strike occurring on the seventh well drilled
+p_third_strike_on_seventh_well = nbinom.pmf(failures_before_3rd_strike, k_successes, p_success)
+
+print(""Probability of the third strike occurring on the seventh well drilled:"", p_third_strike_on_seventh_well)",
+"#in 1980, of 700 men 20-34 years old, 150 were found to be overweight. Whereas, in 1990, of 750 men, 20-34 years old, 170 were found to be overweight.
+# at the 5% significance level, do the data provide sufficient evidence to conclude that, for men 20-34 years old,a a higher porcentage were overweight in 1990 than 10 years earlier. Conduct the hypothesis test","import numpy as np
+from scipy import stats
+
+# Define the sample sizes and number of overweight men for 1980 and 1990
+n1 = 700
+x1 = 150
+
+n2 = 750
+x2 = 170
+
+# Calculate the sample proportions
+p1 = x1 / n1
+p2 = x2 / n2
+
+# Calculate the combined sample proportion
+p_combined = (x1 + x2) / (n1 + n2)
+
+# Calculate the standard error
+SE = np.sqrt(p_combined * (1 - p_combined) * (1/n1 + 1/n2))
+
+# Calculate the test statistic
+z = (p1 - p2) / SE
+
+# Calculate the p-value
+p_value = 2 * (1 - stats.norm.cdf(abs(z)))
+
+# Set the significance level
+alpha = 0.05
+
+print(""Test statistic:"", z)
+print(""P-value:"", p_value)
+
+# Check if the p-value is less than the significance level
+if p_value < alpha:
+    print(""At the 5% significance level, there is sufficient evidence to reject the null hypothesis."")
+else:
+    print(""At the 5% significance level, there is not sufficient evidence to reject the null hypothesis."")",
+"A point estimate is a single value (or point) that serves as an estimate or guess for a population parameter based on sample data. It is used to approximate or infer the true value of a population parameter when it is impractical or impossible to measure the entire population.
+
+For example, if you conduct a survey of 500 people to estimate the average age of all adults in a city, the sample mean age of the 500 surveyed individuals would be a point estimate for the population mean age.
+
+On the other hand, the parameter of interest is the specific population characteristic or value that we want to estimate or make inferences about based on the sample data. It's the true, fixed value that we seek to understand or describe about the entire population.
+
+Continuing with the previous example, the parameter of interest would be the actual average age of all adults in the city, not just the estimate based on the sample. It's what we aim to learn about through our study or survey.
+
+In summary, the point estimate is the estimated value derived from the sample data, while the parameter of interest is the true, unknown value about the population that we're trying to estimate or understand.","Explain the difference between a Type I error and a Type II error in hypothesis testing.
+Type I error: Also known as a ""false positive,"" this error occurs when we reject a null hypothesis that is actually true. 
+Type II error: Also known as a ""false negative,"" this error occurs when we fail to reject a null hypothesis that is actually false. ",
+" What is the probability that a person succeeds on their 5th attempt if the probability of success on any given attempt is 0.2, assuming each attempt is independent?","from scipy.stats import nbinom
+
+# Probability of success on each attempt
+p_success = 0.2
+
+# Number of successes required (k)
+k_successes = 5
+
+# Calculate the number of failures before the 5th success
+failures_before_5th_success = k_successes - 1  # Because successes = failures + 1
+
+# Calculate the probability of succeeding on the 5th attempt
+p_5th_attempt_success = nbinom.pmf(failures_before_5th_success, k_successes, p_success)
+
+print(""Probability of success on the 5th attempt:"", p_5th_attempt_success)",
+# A call center receives an average of 12 calls per hour. What is the probability that they will receive exactly 15 calls in the next hour,"from scipy.stats import poisson
+# Average rate of calls per hour
+average_calls_per_hour = 12
+
+# Number of calls we want to calculate the probability for
+num_calls = 15
+
+# Calculate the probability of receiving exactly 15 calls in the next hour using the Poisson distribution
+p_15_calls = poisson.pmf(num_calls, average_calls_per_hour)
+
+print(""Probability of receiving exactly 15 calls in the next hour:"", p_15_calls)",
+"# If a basketball player makes a basket with a probability of 0.3, what is the probability that the player will make their third basket on their 10th attempt?","from scipy.stats import nbinom
+
+# Probability of making a basket on each attempt
+p_success = 0.3
+
+# Number of successes required (k)
+k_successes = 3  # We want the third basket
+
+# Number of attempts (trials) until the third success
+n_attempts_until_3rd_basket = 10
+
+# Calculate the number of failures before the third success
+failures_before_3rd_basket = n_attempts_until_3rd_basket - k_successes
+
+# Calculate the probability of making the third basket on the 10th attempt
+p_third_basket_on_10th_attempt = nbinom.pmf(failures_before_3rd_basket, k_successes, p_success)
+
+print(""Probability of making the third basket on the 10th attempt:"", p_third_basket_on_10th_attempt)",
+#Construct a 95% confidence interval for the proportion of the population that prefers brand A given 60 out of 200 people surveyed prefer it.,"import scipy.stats as stats
+import numpy as np
+
+# Sample proportion
+p_hat = 60 / 200
+
+# Sample size
+n = 200
+
+# Confidence level
+confidence_level = 0.95
+
+# Calculate the z-score corresponding to the confidence level
+z_score = stats.norm.ppf(1 - (1 - confidence_level) / 2)
+
+# Calculate the margin of error
+margin_of_error = z_score * np.sqrt((p_hat * (1 - p_hat)) / n)
+
+# Calculate the lower and upper bounds of the confidence interval
+lower_bound = p_hat - margin_of_error
+upper_bound = p_hat + margin_of_error
+
+print(""95% Confidence Interval for the Proportion of Population Preferring Brand A:"")
+print(""Lower Bound:"", lower_bound)
+print(""Upper Bound:"", upper_bound)",
+# A marketing study finds that 230 out of 600 sampled smartphone users prefer a particular brand. Is there evidence at the 1% significance level to suggest that less than 40% of all smartphone users prefer this brand?,"from scipy import stats
+import math
+
+# Sample data
+n = 600  # sample size
+x = 230  # number of users who prefer the brand
+
+# Hypothesized population proportion under the null hypothesis
+p_null = 0.40
+
+# Sample proportion
+p_hat = x / n
+
+# Calculate the standard error
+standard_error = math.sqrt((p_null * (1 - p_null)) / n)
+
+# Calculate the z-test statistic
+z = (p_hat - p_null) / standard_error
+
+# Critical value at the 1% significance level (one-tailed test)
+alpha = 0.01
+critical_value = stats.norm.ppf(alpha)
+
+# Print the results
+print(""Sample Proportion:"", p_hat)
+print(""Z-test Statistic:"", z)
+print(""Critical Value:"", critical_value)
+
+# Perform the hypothesis test
+if z <= critical_value:
+    print(""Fail to reject the null hypothesis."")
+else:
+    print(""Reject the null hypothesis."")",
+"# Two different landing pages were tested for a website to see which one has a higher conversion rate. Page A had 42 conversions out of 500 visitors, and Page B had 58 conversions out of 550 visitors.
+Test at the 5% significance level whether there is a significant difference in conversion rates between the two pages.","# Calculate the sample proportions
+p1 = 42 / 500
+p2 = 58 / 550
+
+# Calculate the pooled proportion
+p_pooled = (42 + 58) / (500 + 550)
+
+# Calculate the z-statistic
+z = (p1 - p2) / np.sqrt(p_pooled * (1 - p_pooled) * ((1 / 500) + (1 / 550)))
+
+# Calculate the p-value
+p_value = 2 * (1 - norm.cdf(abs(z)))
+print(p_value)
+
+# Set the significance level
+alpha = 0.05
+
+# Make a decision
+if p_value < alpha:
+    print(""Reject the null hypothesis."")
+else:
+    print(""Fail to reject the null hypothesis."")
+
+# Conclusion
+if p_value < alpha:
+    print(""There is sufficient evidence to conclude that there is a significant difference in conversion rates between the two pages."")
+else:
+    print(""There is not sufficient evidence to conclude that there is a significant difference in conversion rates between the two pages."")",
+"# A person is practicing archery and has a 20% chance of hitting the target with each shot.
+What is the probability that the person hits the target for the first time on the third shot?","p = 0.20
+q = 1 - p
+geoo = (p*1) * (q*2)
+geoo",
+# A bookstore averages 3 customers every hour. What is the probability that exactly 5 customers visit in a particular hour?,"re = poisson.pmf(5,3)
+re",
